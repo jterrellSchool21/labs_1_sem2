@@ -1,6 +1,8 @@
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
+#include <fstream>
+#include "ft_printf.h"
 
 #define ABS(x) (x > 0) ? x : x * -1
 #define MAXRAND 100
@@ -12,13 +14,13 @@ void	PrintArray_one(int *array, int n)
 	int		i;
 
 	i = 0;
-	printf("X = ");
+	ft_printf("X = ");
 	while (i < n)
 	{
-		printf("%d ", array[i]);
+		ft_printf("%d ", array[i]);
 		i++;
 	}
-	printf("\n");
+	ft_printf("\n");
 }
 
 int		*SolveMatrix(int **array1, int **array2, int n, int m)
@@ -138,7 +140,7 @@ void	Do_Absolute_Value(int **array, int n, int m)
 	}
 }
 
-void	ft_bzero(int **array, int n, int m)
+/*void	ft_bzero(int **array, int n, int m)
 {
 	int 	i;
 	int 	j;
@@ -154,7 +156,7 @@ void	ft_bzero(int **array, int n, int m)
 		}
 		i++;
 	}
-}
+}*/
 
 void	FillArray(int **array, int n, int m)
 {
@@ -185,10 +187,10 @@ void	PrintArray(int **array, int n, int m)
 		j = 0;
 		while (j < m)
 		{
-			printf("array[%d][%d] = %d \t", i, j, array[i][j]);
+			ft_printf("array[%d][%d] = %d \t", i, j, array[i][j]);
 			j++;
 		}
-		printf("\n");
+		ft_printf("\n");
 		i++;
 	}
 }
@@ -207,15 +209,29 @@ int		**CreateArray(int n, int m)
 			exit(1);
 		i++;
 	}
-	ft_bzero(res, n, m);
 	return (res);
 }
 
 void	Put_To_File(int **mass, int n, int m)
 {
-	int 	i;
+	int 		i;
+	std::ofstream	fout;
+	int 		j;
 
-	fopen()
+	i = 0;
+	fout.open("itog.txt");
+	while (i < n)
+	{
+		j = 0;
+		while (j < m)
+		{
+			fout << mass[i][j];
+			fout << "\t";
+			j++;
+		}
+		fout << "\n";
+		i++;
+	}
 }
 
 int		main(void)
@@ -231,15 +247,16 @@ int		main(void)
 	FillArray(first, N, M);
 	FillArray(A, N, M);
 	PrintArray(first, N, M);
-	printf("\n");
+	ft_printf("\n");
 	PrintArray(A, N, M);
 	main_1 = Value_Of_Main(first, N, M);
 	medium_value = Medium_Value(first, N, M)[N];
-	printf("Medium value of first matrix = %d\n", medium_value);
-	printf("Value of first matrix main = %d\n", main_1);
+	Put_To_File(first, N, M);
+	ft_printf("Medium value of first matrix = %d\n", medium_value);
+	ft_printf("Value of first matrix main = %d\n", main_1);
 	PrintArray_one(SolveMatrix(first, A, N, M), N);
 	Do_Absolute_Value(first, N, M);
 	PrintArray(first, N, M);
 	Free_Matrix(first, N, M);
-	return 0;
+	return (0);
 }
